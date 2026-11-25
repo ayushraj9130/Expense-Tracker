@@ -1,10 +1,26 @@
+from datetime import datetime
 def monthly_report(expenses):
 
-    month = input("Enter month (YYYY-MM): ")
+    # Step 1: Validate month
+    while True:
+        month = input("Enter month (YYYY-MM): ").strip()
 
+        try:
+            parsed_month = datetime.strptime(month, "%Y-%m")
+
+            if parsed_month.strftime("%Y-%m") == month:
+                break
+
+            print("Invalid format! Example: 2026-11")
+
+        except ValueError:
+            print("Invalid month! Example: 2026-11")
+
+    # Step 2: Initialize variables
     total = 0
     category_totals = {}
 
+    # Step 3: Filter expenses
     for expense in expenses:
 
         if expense["date"].startswith(month):
@@ -19,12 +35,21 @@ def monthly_report(expenses):
             else:
                 category_totals[category] = amount
 
-    print("\nMonthly Total:", total)
+    # Step 4: Handle empty monthly report
+    if not category_totals:
+        print(f"No expenses found for {month}.")
+        return
+
+    # Step 5: Display report
+    print(f"\n===== MONTHLY REPORT: {month} =====")
+
+    print(f"Monthly Total: Rs.{total:.2f}")
 
     print("\nCategory-wise Report:")
 
     for category, amount in category_totals.items():
-        print(category, ":", amount)
+        print(f"{category}: Rs.{amount:.2f}")
+
 
 def expense_analysis(expenses):
 

@@ -22,19 +22,24 @@ def main():
         print("6. Expense Analysis")
         print("7. Exit")
 
-        choose = int(input("Enter your choice: "))
+        try:
+            choose = int(input("Enter your choice: "))
+            
+        except ValueError:
+            print("Invalid input! Please enter a number.")
+            continue
 
         if choose == 1:
-            add_expense()
+            add_expense(expenses)
 
         elif choose == 2:
-            view_expense()
+            view_expense(expenses)
 
         elif choose == 3:
-            update_expense()
+            update_expense(expenses)
 
         elif choose == 4:
-            delete_expense()
+            delete_expense(expenses)
 
         elif choose == 5:
             monthly_report(expenses)
